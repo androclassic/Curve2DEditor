@@ -45,12 +45,22 @@ namespace CurveEditor
         private static int CompareCurvePointByX(CurvePoint p1, CurvePoint p2)
         {
             if (p1.Point2D.X > p2.Point2D.X)
-                return -1;
-            else if( p1.Point2D.X < p2.Point2D.X )
                 return 1;
+            else if( p1.Point2D.X < p2.Point2D.X )
+                return -1;
             else
                 return 0;
         }
+
+        private void DisplayPointsText()
+        {
+            CurvePointsText.Text  = "";
+            for (int i = 0; i < points.Count; i++)
+            {
+                CurvePointsText.Text = CurvePointsText.Text + " "+points[i].Point2D.ToString()+" "+ points[i].GetTangentValue().ToString()+" / ";
+            }
+        }
+
 
         private void DrawGraph()
         {
@@ -79,7 +89,7 @@ namespace CurveEditor
          
                 double x = P1.X + (P2.X - P1.X) * s;
 
-                double y = Hermite(s, P1.Y, P2.Y, T1, T2);         
+                double y =  Hermite(s, P1.Y, P2.Y, T1, T2);         
 
                 PointF front= new PointF((float)x, (float)y);
 
@@ -101,8 +111,8 @@ namespace CurveEditor
 
             return h1 * P1 +                    // multiply and sum all funtions
                        h2 * P2 +                    // together to build the interpolated
-                       h3 * T1 * 100 +                    // point along the curve.
-                       h4 * T2 * 100;
+                       h3 * T1 +                    // point along the curve.
+                       h4 * T2 ;
 
         }
 
@@ -133,9 +143,20 @@ namespace CurveEditor
 
         }
 
-        private void UpdateFrame()
+        private void UpdatePoints()
         {
 
+            CurvePoint currentPoint = points[indexSelected];
+            points.Sort(CompareCurvePointByX);
+            indexSelected = points.FindIndex(delegate(CurvePoint p) { return p.Point2D == currentPoint.Point2D; });
+        }
+
+        private void UpdateFrame()
+        {
+            if (pointSelected)
+                UpdatePoints();
+
+            DisplayPointsText();
             DrawGraph();
             pointTtext.Text = (points[indexSelected].GetTangentValue()).ToString();
             pointXtext.Text = (points[indexSelected].Point2D.X).ToString();
@@ -147,7 +168,8 @@ namespace CurveEditor
 
         private void framebuffer_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            for (int i = 1; i < points.Count; i++)
+            UpdatePoints();
+            for (int i = 1; i <points.Count; i++)
             {
                 if (points[i].Point2D.X > e.X)
                 {
@@ -222,6 +244,11 @@ namespace CurveEditor
                     return;
                 }
         
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
     }
@@ -346,13 +373,13 @@ namespace CurveEditor
         public float GetTangentValue()
         {
             float value = (float)( m_tangentControl[1].Y - m_point.Y ) / (float)(m_tangentControl[1].X - m_point.X);
-            
-            if (value > 100)
-                return 100;
-            else if( value < -100)
-                return -100;
+
+            if (value > distance)
+                return distance;
+            else if (value < -distance)
+                return -distance;
             else
-                return value;
+                return value * distance;
 
         }
 

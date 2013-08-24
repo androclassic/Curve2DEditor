@@ -33,6 +33,7 @@
             this.pointXtext = new System.Windows.Forms.TextBox();
             this.pointYtext = new System.Windows.Forms.TextBox();
             this.pointTtext = new System.Windows.Forms.TextBox();
+            this.CurvePointsText = new System.Windows.Forms.TextBox();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.framebuffer)).BeginInit();
             this.SuspendLayout();
@@ -81,11 +82,22 @@
             this.pointTtext.Size = new System.Drawing.Size(42, 22);
             this.pointTtext.TabIndex = 2;
             // 
+            // CurvePointsText
+            // 
+            this.CurvePointsText.Location = new System.Drawing.Point(12, 411);
+            this.CurvePointsText.Multiline = true;
+            this.CurvePointsText.Name = "CurvePointsText";
+            this.CurvePointsText.ReadOnly = true;
+            this.CurvePointsText.Size = new System.Drawing.Size(710, 62);
+            this.CurvePointsText.TabIndex = 3;
+            this.CurvePointsText.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
             // Curve2D
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(737, 420);
+            this.ClientSize = new System.Drawing.Size(734, 485);
+            this.Controls.Add(this.CurvePointsText);
             this.Controls.Add(this.pointTtext);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.pointYtext);
@@ -106,5 +118,6 @@
         private System.Windows.Forms.TextBox pointYtext;
         private System.Windows.Forms.TextBox pointTtext;
         private System.Windows.Forms.PictureBox framebuffer;
+        private System.Windows.Forms.TextBox CurvePointsText;
     }
 }
