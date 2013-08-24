@@ -1,0 +1,18 @@
+C:\Users\Andrei\documents\visual studio 2012\Projects\CurveEditor\CurveEditor\obj\Debug\CurveEditor.Properties.Resources.resources
+C:\Users\Andrei\documents\visual studio 2012\Projects\CurveEditor\CurveEditor\obj\Debug\CurveEditor.csproj.GenerateResource.Cache
+C:\Users\Andrei\documents\visual studio 2012\Projects\CurveEditor\CurveEditor\bin\Debug\CurveEditor.exe.config
+C:\Users\Andrei\documents\visual studio 2012\Projects\CurveEditor\CurveEditor\bin\Debug\CurveEditor.exe
+C:\Users\Andrei\documents\visual studio 2012\Projects\CurveEditor\CurveEditor\bin\Debug\CurveEditor.pdb
+C:\Users\Andrei\documents\visual studio 2012\Projects\CurveEditor\CurveEditor\obj\Debug\CurveEditor.Curve2D.resources
+C:\Users\Andrei\documents\visual studio 2012\Projects\CurveEditor\CurveEditor\obj\Debug\CurveEditor.exe
+C:\Users\Andrei\documents\visual studio 2012\Projects\CurveEditor\CurveEditor\obj\Debug\CurveEditor.pdb
+C:\Users\Andrei\documents\visual studio 2012\Projects\CurveEditor\CurveEditor\obj\Debug\CurveEditor.csprojResolveAssemblyReference.cache
+E:\Tools\CurveEditor\CurveEditor\bin\Debug\CurveEditor.exe.config
+E:\Tools\CurveEditor\CurveEditor\obj\Debug\CurveEditor.exe
+E:\Tools\CurveEditor\CurveEditor\obj\Debug\CurveEditor.pdb
+E:\Tools\CurveEditor\CurveEditor\bin\Debug\CurveEditor.exe
+E:\Tools\CurveEditor\CurveEditor\bin\Debug\CurveEditor.pdb
+E:\Tools\CurveEditor\CurveEditor\obj\Debug\CurveEditor.csprojResolveAssemblyReference.cache
+E:\Tools\CurveEditor\CurveEditor\obj\Debug\CurveEditor.Curve2D.resources
+E:\Tools\CurveEditor\CurveEditor\obj\Debug\CurveEditor.Properties.Resources.resources
+E:\Tools\CurveEditor\CurveEditor\obj\Debug\CurveEditor.csproj.GenerateResource.Cache
