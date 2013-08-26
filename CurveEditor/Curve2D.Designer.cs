@@ -40,6 +40,9 @@
             // 
             // mainPanel
             // 
+            this.mainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mainPanel.Controls.Add(this.framebuffer);
             this.mainPanel.Location = new System.Drawing.Point(12, 36);
             this.mainPanel.Name = "mainPanel";
@@ -48,7 +51,10 @@
             // 
             // framebuffer
             // 
-            this.framebuffer.Location = new System.Drawing.Point(3, 4);
+            this.framebuffer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.framebuffer.Location = new System.Drawing.Point(0, 0);
             this.framebuffer.Name = "framebuffer";
             this.framebuffer.Size = new System.Drawing.Size(707, 365);
             this.framebuffer.TabIndex = 0;
@@ -84,6 +90,8 @@
             // 
             // CurvePointsText
             // 
+            this.CurvePointsText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.CurvePointsText.Location = new System.Drawing.Point(12, 411);
             this.CurvePointsText.Multiline = true;
             this.CurvePointsText.Name = "CurvePointsText";

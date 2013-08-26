@@ -13,7 +13,6 @@ namespace CurveEditor
 
     public partial class Curve2D : Form
     {
-        Bitmap backbuffer;
         int cellsWidth;
         int cellsHeight;
         int cellSize;
@@ -26,20 +25,18 @@ namespace CurveEditor
         public Curve2D()
         {
             InitializeComponent();
-            cellsWidth = 100;
-            cellsHeight = 60;
+            cellsWidth = 35;
+            cellsHeight = 15;
             cellSize = 25;
-
+            this.Size = new System.Drawing.Size((cellSize * cellsWidth)+50, (cellSize * cellsHeight)+200);
             tangentSelected = false;
             pointSelected = false;
-
+           
             indexSelected = 0;
-            backbuffer = new Bitmap(cellsWidth * cellSize, cellSize * cellsHeight);
             points = new List<CurvePoint>();
-            points.Add(new CurvePoint(0,200));
-            points.Add(new CurvePoint(705, 200));
+            points.Add(new CurvePoint(0, (cellSize * cellsHeight) / 2));
+            points.Add(new CurvePoint((cellSize * cellsWidth), (cellSize * cellsHeight) / 2));
 
-            DrawGraph();
         }
 
         private static int CompareCurvePointByX(CurvePoint p1, CurvePoint p2)
@@ -57,14 +54,14 @@ namespace CurveEditor
             CurvePointsText.Text  = "";
             for (int i = 0; i < points.Count; i++)
             {
-                CurvePointsText.Text = CurvePointsText.Text + " "+points[i].Point2D.ToString()+" "+ points[i].GetTangentValue().ToString()+" / ";
+                PointF point = new PointF(points[i].Point2D.X / (cellsWidth * cellSize), points[i].Point2D.Y / (cellsHeight * cellSize));
+                CurvePointsText.Text = CurvePointsText.Text + " " + point.ToString() + " " + points[i].GetTangentValue().ToString() + " / ";
             }
         }
 
 
-        private void DrawGraph()
+        private void DrawGraph(System.Drawing.Graphics go)
         {
-            System.Drawing.Graphics go = Graphics.FromImage(backbuffer);
             go.Clear(Color.White);
             DrawLines(go);
 
@@ -89,7 +86,7 @@ namespace CurveEditor
          
                 double x = P1.X + (P2.X - P1.X) * s;
 
-                double y =  Hermite(s, P1.Y, P2.Y, T1, T2);         
+                double y = Hermite(s, P1.Y, P2.Y, T1 * (P2.X - P1.X), T2 * (P2.X - P1.X));         
 
                 PointF front= new PointF((float)x, (float)y);
 
@@ -135,7 +132,7 @@ namespace CurveEditor
 
         private void framebuffer_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawImageUnscaled(this.backbuffer, new Point(0, 0));
+            UpdateFrame(e.Graphics);
         }
 
         private void framebuffer_Click(object sender, EventArgs e)
@@ -151,13 +148,13 @@ namespace CurveEditor
             indexSelected = points.FindIndex(delegate(CurvePoint p) { return p.Point2D == currentPoint.Point2D; });
         }
 
-        private void UpdateFrame()
+        private void UpdateFrame(System.Drawing.Graphics go)
         {
             if (pointSelected)
                 UpdatePoints();
 
             DisplayPointsText();
-            DrawGraph();
+            DrawGraph(go);
             pointTtext.Text = (points[indexSelected].GetTangentValue()).ToString();
             pointXtext.Text = (points[indexSelected].Point2D.X).ToString();
             pointYtext.Text = (points[indexSelected].Point2D.Y).ToString();
@@ -178,12 +175,12 @@ namespace CurveEditor
 
 
                     float s = (e.X - p1.X) / (p2.X - p1.X);
-                    float y = (float)Hermite(s, p1.Y, p2.Y, points[i - 1].GetTangentValue(), points[i].GetTangentValue());
+                    float y = (float)Hermite(s, p1.Y, p2.Y, points[i - 1].GetTangentValue() * (p2.X - p1.X), points[i].GetTangentValue()*(p2.X - p1.X));
                     points.Insert(i,new CurvePoint(e.X, y));
                     break;
                 }
             }
-            UpdateFrame();
+            Refresh();
         }
 
         private void framebuffer_MouseClick(object sender, MouseEventArgs e)
@@ -200,12 +197,12 @@ namespace CurveEditor
             if(tangentSelected)
             {
                 points[indexSelected].UpdateTangentController(new Point(e.X, e.Y));
-                UpdateFrame();
+                Refresh();
             }
             if (pointSelected)
             {
                 points[indexSelected].UpdatePointController(new Point(e.X, e.Y));
-                UpdateFrame();
+                Refresh();
             }
         }
 
@@ -216,7 +213,7 @@ namespace CurveEditor
             if (indexSelected < points.Count)
             {
                 points[indexSelected].Select(-1);
-                UpdateFrame();
+                Refresh();
             }
         }
 
@@ -353,7 +350,15 @@ namespace CurveEditor
         {
             float x = mousePosition.X - m_point.X;
             float y = mousePosition.Y - m_point.Y;
-            
+
+            if (selectedIndex == -1)
+                return;
+            if (selectedIndex == 0 && x < 1)
+                x=1;
+            if (selectedIndex == 1 && x > -1)
+                x=-1;
+
+
             float magnitude = (float)Math.Sqrt( (double)(x * x + y * y) );
             x *= distance / magnitude;
             y *= distance / magnitude;
@@ -365,8 +370,8 @@ namespace CurveEditor
             }
             else
             {
-                m_tangentControl[0] = m_point + new Size((int)x, (int)y);
-                m_tangentControl[1] = m_point - new Size((int)x, (int)y);
+                m_tangentControl[0] = m_point - new Size((int)x, (int)y);
+                m_tangentControl[1] = m_point + new Size((int)x, (int)y);
             }
         }
 
@@ -377,9 +382,9 @@ namespace CurveEditor
             if (value > distance)
                 return distance;
             else if (value < -distance)
-                return -distance;
+                return -distance ;
             else
-                return value * distance;
+                return value ;
 
         }
 
